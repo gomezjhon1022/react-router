@@ -9,6 +9,8 @@ function LoginPage() {
     auth.login({ username });
   };
 
+  if (auth.user) return (<h2>Ya has iniciado sesion</h2>)
+
   return (
     <>
       <h1>Login</h1>

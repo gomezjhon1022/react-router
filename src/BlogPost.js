@@ -1,14 +1,14 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { blogdata } from './blogdata';
 import { useAuth } from './auth';
+import { useBlogData } from './useBlogData';
 
 function BlogPost() {
   const navigate = useNavigate();
   const { slug } = useParams();
 
   const auth = useAuth();
-
+  const { blogdata, deleteBlog, setBlogData } = useBlogData();
   const blogpost = blogdata.find(post => post.slug === slug);
 
   const canDelete = (auth.user?.role=== 'admin' || blogpost.author === auth.user?.username);
@@ -19,6 +19,13 @@ function BlogPost() {
     navigate('/blog');
   }
 
+  const DeleteBlog = () => {
+    console.log('eliminar post');
+    console.log({blogpost});
+    deleteBlog(blogpost);
+    navigate('/');
+  }
+
   return (
     <>
       <h2>{blogpost.title}</h2>
@@ -27,7 +34,7 @@ function BlogPost() {
       <p>{blogpost.content}</p>
 
       {canDelete && (
-        <button>Eliminar blogpost</button>
+        <button onClick={DeleteBlog}>Eliminar blogpost</button>
       )}
       {canEdit && (
         <button>Editar blogpost</button>

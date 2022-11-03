@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const adminList = ['Jhonson', 'Daenerys', 'Hermione'];
+const editorList = ['Natalia', 'Jhon','Lina', 'Eduardo'];
 
 const AuthContext = React.createContext();
 
@@ -11,9 +12,20 @@ function AuthProvider({ children}) {
 
   const login = ({ username }) => {
     const isAdmin = adminList.find(admin => admin===username);
-    setUser({ username, isAdmin });
+    const isEditor = editorList.find(editor => editor === username);
+    let role = '';
+    if (isAdmin) {
+      role = 'admin'
+    } else if (isEditor) {
+      role = 'editor'
+    } else {
+      role = 'normal'
+    }
+
+    setUser({ username, role });
     navigate('/profile');
   };
+
 
   const logout = () => {
     setUser( undefined );

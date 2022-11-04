@@ -7,6 +7,7 @@ import { BlogPost } from './BlogPost';
 import { LoginPage } from './LoginPage';
 import { LogoutPage } from './LogoutPage';
 import { AuthProvider, AuthRoute } from './auth';
+import { BlogAdd } from './BlogAdd';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
                 <ProfilePage />
               </AuthRoute>}
             />
+            <Route path='/addpost' element={<BlogAdd />} />
             <Route path='*' element={<p>Not found</p>} />
           </Routes>
         </AuthProvider>

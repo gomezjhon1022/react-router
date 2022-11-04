@@ -8,28 +8,29 @@ function BlogPost() {
   const { slug } = useParams();
 
   const auth = useAuth();
-  const { blogdata, deleteBlog, setBlogData } = useBlogData();
+  const { blogdata, deleteBlog } = useBlogData();
   const blogpost = blogdata.find(post => post.slug === slug);
 
-  const canDelete = (auth.user?.role=== 'admin' || blogpost.author === auth.user?.username);
-
+  const canDelete = (auth.user?.role === 'admin' || blogpost.author === auth.user?.username);
   const canEdit = (blogpost.author === auth.user?.username);
+  const canAdd = auth.user?.role === 'editor';
 
   const returnToBlog = () => {
     navigate('/blog');
   }
 
   const DeleteBlog = () => {
-    console.log('eliminar post');
-    console.log({blogpost});
     deleteBlog(blogpost);
     navigate('/');
+  }
+  const addBlog = () => {
+    navigate('/addpost');
   }
 
   return (
     <>
-      <h2>{blogpost.title}</h2>
       <button onClick={returnToBlog}>Volver al blog</button>
+      <h2>{blogpost.title}</h2>
       <p>{blogpost.author}</p>
       <p>{blogpost.content}</p>
 
@@ -38,6 +39,9 @@ function BlogPost() {
       )}
       {canEdit && (
         <button>Editar blogpost</button>
+      )}
+      {canAdd && (
+        <button onClick={addBlog}>Añadir blogpost</button>
       )}
     </>
   );

@@ -22,16 +22,26 @@ blogdatainitial.push({
 
 function useBlogData() {
   let [blogdata, setBlogData] = React.useState(blogdatainitial);
-  console.log('dentro de la funcion',blogdata);
 
   const deleteBlog = (blogToDelete) => {
     const item = blogdata.findIndex(blog => blogToDelete.title === blog.title);
     let newBlogdata = blogdata;
     newBlogdata.splice(item, 1);
     setBlogData(newBlogdata);
-    console.log('despues de borrarlo',blogdata);
   }
-  return {blogdata, setBlogData, deleteBlog};
+
+  const addBlog = (blogtitle, blogtext, blogauthor) => {
+    const blog = {
+      title: blogtitle,
+      slug: blogtitle.trim().toLowerCase().split(' ').join('-'),
+      content: blogtext,
+      author: blogauthor,
+    }
+    let newblogdata = blogdata;
+    newblogdata.push(blog);
+    setBlogData(newblogdata);
+  }
+  return {blogdata, setBlogData, deleteBlog, addBlog};
 }
 
 export { useBlogData };

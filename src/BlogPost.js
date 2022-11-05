@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from './auth';
 import { useBlogData } from './useBlogData';
 
@@ -26,6 +26,9 @@ function BlogPost() {
   const addBlog = () => {
     navigate('/addpost');
   }
+  const editBlog = () => {
+    navigate(`/blog/${blogpost.slug}/edit`);
+  }
 
   return (
     <>
@@ -38,11 +41,12 @@ function BlogPost() {
         <button onClick={DeleteBlog}>Eliminar blogpost</button>
       )}
       {canEdit && (
-        <button>Editar blogpost</button>
+        <button onClick={editBlog}>Editar blogpost</button>
       )}
       {canAdd && (
         <button onClick={addBlog}>Añadir blogpost</button>
       )}
+      <Outlet />
     </>
   );
 }

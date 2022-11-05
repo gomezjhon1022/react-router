@@ -26,10 +26,6 @@ function BlogAdd() {
     event.preventDefault();
     titleblog = event.target.value;
   }
- 
-  // if (!auth.user) {
-  //   return <Navigate to='/profile' />
-  // }
 
   return (
     <>

@@ -41,7 +41,17 @@ function useBlogData() {
     newblogdata.push(blog);
     setBlogData(newblogdata);
   }
-  return {blogdata, setBlogData, deleteBlog, addBlog};
+  const editBlog = (blogToEdit, titleEdited, textEdited ) => {
+    const blogIndex =blogdata.findIndex(blog => blogToEdit.title === blog.title);
+    let newBlogdata = [...blogdata];
+    newBlogdata[blogIndex].title = titleEdited;
+    newBlogdata[blogIndex].content = textEdited;
+    let slugEdited = titleEdited.trim().toLowerCase().split(' ').join('-');
+    newBlogdata[blogIndex].slug =slugEdited;
+    setBlogData(newBlogdata);
+    console.log(blogdata);
+  }
+  return {blogdata, setBlogData, deleteBlog, addBlog, editBlog};
 }
 
 export { useBlogData };

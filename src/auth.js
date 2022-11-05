@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const adminList = ['Jhonson', 'Daenerys', 'Hermione'];
+const adminList = ['Jhonson'];
 const editorList = ['Natalia', 'Jhon','Lina', 'Eduardo'];
 
 const AuthContext = React.createContext();
@@ -55,8 +55,27 @@ function AuthRoute(props) {
   return props.children
 }
 
+function AuthAdd(props) {
+  const auth = useAuth();
+  if (!auth.user || auth.user.role !== 'editor') {
+    return <Navigate to="/" />
+  }
+
+  return props.children
+}
+
+function AuthEdit(props) {
+  const auth = useAuth();
+  if (!auth.user) {
+    return <Navigate to="/login" />
+  }
+
+  return props.children
+}
 export {
   AuthProvider,
   useAuth,
   AuthRoute,
+  AuthAdd,
+  AuthEdit
 };

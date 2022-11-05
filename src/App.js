@@ -6,8 +6,9 @@ import { Menu } from './Menu';
 import { BlogPost } from './BlogPost';
 import { LoginPage } from './LoginPage';
 import { LogoutPage } from './LogoutPage';
-import { AuthProvider, AuthRoute } from './auth';
+import { AuthProvider, AuthRoute, AuthAdd, AuthEdit } from './auth';
 import { BlogAdd } from './BlogAdd';
+import { BlogEdit } from './BlogEdit';
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/blog' element={<BlogPage />} >
-              <Route path=':slug' element={<BlogPost />} />
+              <Route path=':slug' element={<BlogPost />} >
+                <Route path='edit' element={<BlogEdit />} />
+              </Route>
             </Route>
             <Route path='/login' element={<LoginPage />} />
             <Route
@@ -35,7 +38,14 @@ function App() {
                 <ProfilePage />
               </AuthRoute>}
             />
-            <Route path='/addpost' element={<BlogAdd />} />
+            <Route path='/addpost' element={
+              <AuthAdd>
+                <BlogAdd />
+              </AuthAdd>} />
+            {/* <Route path='/editpost' element={
+            <AuthEdit>
+              <BlogEdit />
+            </AuthEdit>} /> */}
             <Route path='*' element={<p>Not found</p>} />
           </Routes>
         </AuthProvider>
